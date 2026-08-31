@@ -1,0 +1,59 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+void merge_array(vector<int>&vec,int st,int mid,int ed)
+{
+    int l = st;
+    int r = mid + 1;
+    vector<int> temp;
+    while(l<=mid&&r<=ed)
+    {
+        if(vec[l]<vec[r])
+        {
+            temp.push_back(vec[l]);
+            l++;
+        }else{
+            temp.push_back(vec[r]);
+            r++;
+        }
+    }
+
+    while(l<=mid){
+    temp.push_back(vec[l]);
+    l++;
+    }
+    while(r<=ed)
+    {
+        temp.push_back(vec[r]);
+            r++;
+    }
+
+
+    for(int i = 0; i < temp.size(); i++)
+{
+    vec[st + i] = temp[i];
+}
+}
+void break_array(vector<int>&vec,int st,int ed)
+{
+    int mid  = st + (ed -st) / 2;
+
+    if(st >= ed)
+        return;
+
+    //left half 
+    break_array(vec,st,mid);
+    //right half
+    break_array(vec,mid+1,ed);
+    //for merging array
+    merge_array(vec,st,mid,ed);
+}
+int  main()
+{
+    vector<int> vec = {32,434,645,52,3554,653,534,64,6,564,3,65,464,65};
+    break_array(vec,0,vec.size()-1);
+    for(int i:vec)
+    cout<<i<<" ";
+    return 0;
+}
