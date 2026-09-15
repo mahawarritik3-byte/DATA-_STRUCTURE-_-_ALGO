@@ -1,0 +1,165 @@
+#include<iostream>
+using namespace std;
+class node
+{
+    public:
+    int data;
+    node* next;
+    node(int val)
+    {
+        data = val;
+        next = NULL;
+    }
+};
+class list
+{
+    public:
+    node* head;
+    node* tail;
+    list()
+    {
+        head=tail=NULL;
+    }
+
+    void push_back(int val)
+    {
+        node* newnode = new node(val);
+        if(head==NULL)
+        {
+            head = tail = newnode;
+        }else{
+            tail->next= newnode;
+            tail = newnode;
+        }
+    }
+    void push_front(int val)
+    {
+        node* newnode = new node(val);
+        if(head==NULL)
+        {
+            head=tail=newnode;
+        }else{
+            newnode->next = head;
+            head = newnode;
+        }
+    }
+    void pop_front()
+    {
+        node* temp = head;
+        if(head==NULL) return;
+        if(head==tail)
+        {
+            head=tail=NULL;
+            delete temp;
+        }else{
+            head = head->next;
+            delete temp;
+        }
+    }
+   void pop_back()
+{
+    node* temp = head;
+
+    if(head == NULL)
+        return;
+
+    if(head == tail)
+    {
+        delete head;
+        head = tail = NULL;
+        return;
+    }
+
+    while(temp->next != tail)
+    {
+        temp = temp->next;
+    }
+
+    delete tail;
+    tail = temp;
+    tail->next = NULL;
+}
+
+    void insert(int val,int pos)
+    {
+        if(pos==1){
+        push_front(val);
+        return;
+        }
+        node* newnode = new node(val);
+        node* temp = head;
+        
+        for(int i=1;i<pos-1;i++)
+            {
+                temp = temp->next;
+            }
+        newnode->next = temp->next;
+        temp->next= newnode;        
+    }
+
+    void deletee(int pos)
+
+    {
+        if(pos==1)
+        {
+            pop_front();
+            return;
+        }
+        node* temp = head;
+        for(int i=1;i<pos-1;i++)
+            {
+                temp = temp->next;
+            }
+        node* a = temp->next;
+        temp->next = temp->next->next;
+        delete a;
+    }
+    void print()
+    {
+        node* temp = head;
+        while(temp!=NULL)
+            {
+                cout<<temp->data<<" ";
+                temp = temp->next;
+            }
+    }
+};
+int main()
+{
+    list ll;
+    ll.push_back(1);
+    ll.push_back(2);
+    ll.push_back(3);
+    ll.push_back(4);
+    ll.push_back(5);
+    ll.push_back(6);
+    ll.push_back(7);
+    ll.push_front(0);
+    ll.push_back(8);
+    ll.push_front(9);
+    ll.print();
+    cout<<endl;
+    ll.pop_front();
+    ll.print();
+    ll.pop_back(); 
+    ll.pop_back();
+    ll.pop_back();
+    ll.pop_back();
+    ll.pop_back();
+    cout<<endl;
+    ll.print();
+     ll.push_back(3);
+    ll.push_back(4);
+    ll.push_back(5);
+    ll.push_back(6);
+    ll.push_back(7);
+    cout<<endl<<"new things comes with time not with wife : "<<endl;
+    ll.print();
+    cout<<endl<<"new things comes with time not with wife : "<<endl;
+    ll.insert(99,4);
+    ll.print();
+    cout<<endl<<"new things comes with time not with wife : "<<endl;
+    ll.deletee(5);
+    ll.print();
+    return 0;
+}
